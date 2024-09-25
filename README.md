@@ -1,16 +1,37 @@
-# exam_core_flutter
+# 📝 Resume Builder App
 
-A new Flutter project.
+## Overview
 
-## Getting Started
+Welcome to the **Resume Builder App**! This application helps users quickly and easily create professional resumes by guiding them through a series of forms and exporting their data in a structured format.
 
-This project is a starting point for a Flutter application.
+Whether you're building a resume for your first job or fine-tuning it for a new opportunity, this tool simplifies the process of creating clean, modern, and impactful resumes.
 
-A few resources to get you started if this is your first Flutter project:
+## Features
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+✨ **Simple UI/UX** – Easy-to-navigate interface for a seamless resume-building experience.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+💼 **Predefined Resume Templates** – Choose from multiple professional templates that suit your style.
+
+🖥️ **Real-Time Preview** – See how your resume looks while filling in the details.
+
+📁 **Export to PDF/Doc** – Download your resume in different formats, ready to send to employers.
+
+🔧 **Customization** – Add or remove sections as per your need.
+
+📊 **Responsive Design** – Build resumes on any device, be it mobile, tablet, or desktop.
+
+## Technologies Used
+
+- **Frontend**: HTML, CSS, JavaScript (React or Vue if applicable)
+- **Backend**: Node.js / Python (Flask/Django)
+- **Database**: MongoDB / SQL / Firebase
+- **PDF Generation**: jsPDF / Puppeteer
+- **Version Control**: Git
+
+## Installation
+
+Follow these steps to run the Resume Builder App locally:
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/yourusername/resume-builder-app.git
