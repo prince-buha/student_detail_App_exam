@@ -1,18 +1,35 @@
-import 'package:flutter/material.dart';
+import 'dart:io';
 
-class adddetailpage extends StatefulWidget {
-  const adddetailpage({super.key});
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+
+File? image;
+
+class AddDetailPage extends StatefulWidget {
+  const AddDetailPage({super.key});
 
   @override
-  State<adddetailpage> createState() => _adddetailpageState();
+  State<AddDetailPage> createState() => _AddDetailPageState();
 }
 
-class _adddetailpageState extends State<adddetailpage> {
+class _AddDetailPageState extends State<AddDetailPage> {
+  ImagePicker picker = ImagePicker();
+
+  Future<void> pickImage({required ImageSource source}) async {
+    XFile? xFile = await picker.pickImage(
+      source: source,
+    );
+    if (xFile != null) {
+      image = File(xFile.path);
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Colors.black54,
         title: const Text(
           "Add Student Detail",
           style: TextStyle(
@@ -24,6 +41,7 @@ class _adddetailpageState extends State<adddetailpage> {
           Icon(
             Icons.add_box_outlined,
             size: 30,
+            color: Colors.black,
           ),
           SizedBox(
             width: 10,
@@ -31,80 +49,85 @@ class _adddetailpageState extends State<adddetailpage> {
         ],
       ),
       backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.all(8.0),
+      body: SingleChildScrollView(
         child: Column(
           children: [
-            CircleAvatar(
-              backgroundImage: const NetworkImage(
-                "https://st3.depositphotos.com/15648834/17930/v/450/depositphotos_179308454-stock-illustration-unknown-person-silhouette-glasses-profile.jpg",
-              ),
-              radius: 70,
-              child: Align(
-                alignment: Alignment.bottomRight,
-                child: IconButton(
-                  color: Colors.black,
-                  onPressed: () {
-                    showDialog(
-                      context: context,
-                      builder: (context) {
-                        return AlertDialog(
-                            backgroundColor: Colors.white,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.white70,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                alignment: Alignment.center,
+                child: Stack(
+                  alignment: Alignment.bottomRight,
+                  children: [
+                    CircleAvatar(
+                      radius: 70,
+                      backgroundImage: (image != null)
+                          ? FileImage(image!)
+                          : const NetworkImage(
+                                  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSb2F1sRrmj0rFgZyVmC8yBgXxyccFRJf7LPQ&s")
+                              as ImageProvider,
+                    ),
+                    FloatingActionButton.small(
+                      backgroundColor: Colors.white,
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) => AlertDialog(
                             title: const Text("Pick Image"),
+                            titleTextStyle: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 30,
+                            ),
+                            backgroundColor: Colors.white,
                             content: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
-                                TextButton(
+                                ElevatedButton.icon(
                                   onPressed: () {
-                                    const Text("hii");
+                                    pickImage(source: ImageSource.camera);
+                                    setState(() {});
+                                    Navigator.pop(context);
                                   },
-                                  child: Container(
-                                    height: 30,
-                                    width: 30,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Colors.black,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: const Center(
-                                      child: Text(
-                                        "Camera",
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ),
+                                  label: const Text(
+                                    "Camera",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  icon: Icon(
+                                    Icons.camera_alt_outlined,
+                                    color: Colors.black,
+                                    size: 30,
                                   ),
                                 ),
-                                const SizedBox(
-                                  width: 7,
-                                ),
-                                Expanded(
-                                  child: Container(
-                                    height: 30,
-                                    width: 30,
-                                    decoration: BoxDecoration(
-                                      border: Border.all(
-                                        color: Colors.black,
-                                      ),
-                                      borderRadius: BorderRadius.circular(20),
-                                    ),
-                                    child: const Center(
-                                      child: Text(
-                                        "Gallery",
-                                        style: TextStyle(
-                                          fontSize: 20,
-                                        ),
-                                      ),
-                                    ),
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    pickImage(source: ImageSource.gallery);
+                                    setState(() {});
+                                    Navigator.pop(context);
+                                  },
+                                  label: const Text(
+                                    "Gallary",
+                                    style: TextStyle(color: Colors.black),
+                                  ),
+                                  icon: const Icon(
+                                    Icons.photo_sharp,
+                                    color: Colors.lightBlue,
+                                    size: 30,
                                   ),
                                 ),
                               ],
-                            ));
+                            ),
+                          ),
+                        );
                       },
-                    );
-                  },
-                  icon: const Icon(Icons.add),
+                      splashColor: Colors.white,
+                      child: const Icon(Icons.add),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -114,7 +137,7 @@ class _adddetailpageState extends State<adddetailpage> {
               decoration: InputDecoration(
                 fillColor: Colors.white,
                 focusColor: Colors.black,
-                border: UnderlineInputBorder(
+                border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(20),
                   ),
@@ -126,12 +149,13 @@ class _adddetailpageState extends State<adddetailpage> {
               height: 10,
             ),
             const TextField(
+              maxLength: 4,
               cursorColor: Colors.black,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 fillColor: Colors.white,
                 focusColor: Colors.black,
-                border: UnderlineInputBorder(
+                border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(20),
                   ),
@@ -140,21 +164,21 @@ class _adddetailpageState extends State<adddetailpage> {
               ),
             ),
             const SizedBox(
-              height: 10,
+              height: 5,
             ),
             const TextField(
+              maxLength: 2,
               cursorColor: Colors.black,
-              cursorWidth: 2,
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 fillColor: Colors.white,
                 focusColor: Colors.black,
-                border: UnderlineInputBorder(
+                border: OutlineInputBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(20),
                   ),
                 ),
-                label: Text("Enter Student Standard"),
+                label: Text("Enter Student std"),
               ),
             ),
           ],

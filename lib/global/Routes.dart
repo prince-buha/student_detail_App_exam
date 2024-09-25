@@ -11,7 +11,7 @@ class Routes {
 
   static Map<String, WidgetBuilder> myRoutes = {
     Speshscreen: (context) => speshscreen(),
-    Homepage: (context) => homePage(),
-    Adddeatilpage: (context) => adddetailpage(),
+    Homepage: (context) => const homePage(),
+    Adddeatilpage: (context) => const AddDetailPage(),
   };
 }

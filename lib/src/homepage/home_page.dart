@@ -33,7 +33,7 @@ class _homePageState extends State<homePage> {
           )
         ],
       ),
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.black12,
       body: Column(
         children: [
           const SizedBox(
